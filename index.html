@@ -2,8 +2,41 @@
 <html> 
   <head>
     <title>Processing.JS inside Webpages: Template</title> 
+    
+    <style>
+        #title {
+            font-family: monospace;
+            font-weight: bold;
+            border: dotted;
+            background: rgb(108, 194, 199);
+            color: rgb(128, 128, 128);
+        }
+        #creator {
+            font-family: sans-serif;
+            font-style: italic;
+            font-size: 15px;
+        }
+        
+        
+    </style>
+    
   </head>
   <body>
+  <h1 id="title"><center>Space invaders</center></h1>
+  
+  <h3 id="creator">Created by Andrew Pedley (May 2020)</h3>
+  
+  <p>My first attempt at writing a Javascript game.  A bit clunky.....
+  </p>
+  
+      How to play:
+      <ol>
+          <li> Press any key to start the game
+          <li> Move the Gun using the arrow keys
+          <li> Fire using the space bar
+          <li> If shot, continue by pressing "C"
+          <li> To restart the game press "R"
+      </ol>
 	<!--This draws the canvas on the webpage -->
     <canvas id="mycanvas"></canvas> 
   </body>
