@@ -74,7 +74,12 @@ var ScoreCard = function(x, y, width, height) {
     this.level = 1;
     this.bulletsFired = 0;
 };
-
+	    
+ScoreCard.prototype.reset = function() {
+    this.score =0;  
+    this.lives = 3;
+    this.level = 1;
+};
 ScoreCard.prototype.registerKill = function() {
     this.score += 5;    
 };
@@ -359,7 +364,7 @@ var Gun = function(x, y, lives) {
     this.x = x;
     this.y = y;
     this.lives = lives;
-    this.BulletRate = 20;
+    this.BulletRate = 10;
     this.lastShot = 0;
     this.thisShot = 0;
 };
@@ -660,8 +665,10 @@ keyPressed = function() {
           gameOver = false;
           myAliens = [];
           myBullets = [];
-          gameScoreCard.level = 1;
+          gameScoreCard.reset;
           buildAliens();
+	  //Restart draw function
+	  loop();
       }
   }
   //Start the game 
@@ -679,6 +686,7 @@ keyPressed = function() {
         myGun.thisShot = frameCount;
         myGun.shoot(myGun.x + 17);   
       }
+	// Continue
   } else if (delayRestart > 0) {
      if (keyCode === 16 || keyCode === 67) { 
          delayRestart = null; 
@@ -728,7 +736,8 @@ draw = function() {
        }
     // If game has finished
    } else if (gameOver === true) {
-        text("GAME OVER, PRESS 'R' TO RESTART", 165, 50, 100, 100);   
+        text("GAME OVER, PRESS 'R' TO RESTART", 165, 50, 100, 100);  
+	noLoop(); 
    }
    
 };
