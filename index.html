@@ -24,7 +24,7 @@
   <body>
   <h1 id="title"><center>Space invaders</center></h1>
   
-  <h3 id="creator">Created by Andrew Pedley (May 2020)</h3>
+  <h3 id="creator">Created by Pedders (May 2020)</h3>
   
   <p>My first attempt at writing a Javascript game.  A bit clunky.....
   </p>
@@ -50,8 +50,8 @@
       size(400, 400); 
       frameRate(30);
         
-      // Paste code from Khan Academy here:
-      /* Space Invaders game
+      // Paste Javascript here:
+ /* Space Invaders game
 
 to do:
 1. Aliens
@@ -155,7 +155,7 @@ Bomb.prototype.draw = function() {
 };
 Bomb.prototype.move = function() {
     this.x = this.x;
-    this.y = this.y + 2;
+    this.y = this.y + 3;
 };
 
 // Drawing my alien (alien.prototype.draw)
@@ -224,15 +224,16 @@ Alien.prototype.bomb = function(x) {
 // moving my alien (alien.prototype.move)
 
 Alien.prototype.move = function() {
+    var speed = gameScoreCard.level || 0;
     
     if (moveDown === true) {
         this.y = this.y + 6;
         movedDown = true;
     } else {
         if (direction === "Right") {
-           this.x = this.x + 2;
+           this.x = this.x + 2 + speed;
         } else {
-            this.x = this.x - 2;
+            this.x = this.x - 2 - speed;
        
         }
         movedDown = false;
@@ -358,7 +359,7 @@ var Gun = function(x, y, lives) {
     this.x = x;
     this.y = y;
     this.lives = lives;
-    this.BulletRate = 30;
+    this.BulletRate = 20;
     this.lastShot = 0;
     this.thisShot = 0;
 };
@@ -658,6 +659,8 @@ keyPressed = function() {
           gameStarted = true;
           gameOver = false;
           myAliens = [];
+          myBullets = [];
+          gameScoreCard.level = 1;
           buildAliens();
       }
   }
@@ -705,10 +708,19 @@ draw = function() {
             if (gameStarted) {
                drawAliens();
             }
+            //Is the level complete
+            if (myAliens.length > 0) {
             drawBombs();
                
             matchHits();
             drawHouses();
+            //level must be over
+            } else {
+                gameScoreCard.level++;
+                gameOver = false;
+                myAliens = [];
+                buildAliens();
+            }
        } else {
            text("PRESS 'C' TO CONTINUE", 120, 35, 290, 150);
            //If the gun has just been killed, stop draw function
@@ -722,6 +734,7 @@ draw = function() {
 };
 
     }};
+
 
   // Get the canvas that ProcessingJS will use
   var canvas = document.getElementById("mycanvas"); 
