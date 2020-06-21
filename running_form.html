@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<meta charset= "utf-8">
+		<TITLE>template</TITLE>
+		<style>
+			h1 {
+				background-color: rgb(120,120,100);
+				text-align: center;
+			}  
+			
+			b {
+				display: inline-block;
+				float: left;
+				clear: left;
+				width: 125px;
+				text-align: left; /*Change to right here if you want it close to the inputs*/
+			}
+			.runningman {
+				width: 40px;
+				height: 40px;
+			}
+		</style>
+	</HEAD>
+	<BODY>
+		<H1>Run Results page</H1>
+		
+		<img id="runningman" src="manrunning.jpg" style="float:right; width:40px;height:40px;> <br><br>
+		
+		<p>This is a page on the runs I go on. I am displaying them  as a table and a graph.<br>
+		
+		</p>
+		
+		
+			<form id="running-form">
+        <label>
+            <b>Runner</b>
+            <input type="text" name="runner">
+        </label>
+		<br>
+		<label>
+            <b>Date</b>
+            <input type="date" name="date">
+        </label>
+		<br>
+		<label>
+            <b>Distance</b>
+            <input type="number" name="distance">
+        </label>
+		<br>
+		<label>
+            <b>Run time</b>
+			
+            <input type="time" min="0" max="1:00:00" placeholder="0:00:00" name="runtime">
+        </label>
+		<br>
+        <button type="submit">Submit</button>
+        <div id="submit-results"></div>
+    </form>
+	
+	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script>
+		var calcRunTime = function(distance, runtime) {
+		
+		// eg.
+		// 19:35 / 3 = 19 + (35/60) = 19.58 / 3 = 6.53
+		
+		// 
+		var sepPos = parseInt(runtime.indexOf(":"));
+		var runMins = parseFloat(runtime.slice(0, sepPos));
+		var runSeconds = parseFloat(runtime.slice(sepPos + 1) / 60);
+		// Converted back to mm:ss.  eg 6 & .53 * 60 = 6:31
+		var runTime = (runMins + runSeconds) / distance;
+		runMins = parseInt(runTime);
+		runSeconds = parseInt((runTime - runMins) * 60);
+		
+		var runMinMile = runMins + ":" + runSeconds;
+		
+		return runMinMile;
+	};
+        
+       $("#running-form").on("submit", function(event) {
+			event.preventDefault();
+			// TODO: Find inputted distance & run time, calculate minutes per mile
+			var $distance = $(this).find("[name=distance]");
+			var distance = $distance.val();
+			var $runtime = $(this).find("[name=runtime]");
+			var runtime = $runtime.val();
+			var $total = calcRunTime(distance, runtime);
+			console.log($total);
+			//console.log("Got here");
+			$("#submit-results").html("You ran <em>" + $total + "</em> minutes / mile");
+    });
+	</script>
+	
+	</BODY>
+
+</HTML>
